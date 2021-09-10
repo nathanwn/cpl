@@ -1,5 +1,7 @@
 # CPL
 
+![build](https://github.com/nathan-wien/cpl/actions/workflows/cmake.yml/badge.svg)
+
 CPL stands for **C**ompetitive **P**rogramming **L**ibrary.
 
 The main purpose of this project is to properly maintain various implementations of algorithms and data structures (mostly for personal competitive programming purposes, for now).
