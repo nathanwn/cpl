@@ -1,5 +1,5 @@
-#ifndef CPL_SEGMENT_TREE_H_
-#define CPL_SEGMENT_TREE_H_
+#ifndef CPL_STRUCTURES_SEGMENT_TREE_H_
+#define CPL_STRUCTURES_SEGMENT_TREE_H_
 
 #include <functional>
 #include <vector>
@@ -96,4 +96,4 @@ public:
     }
 };
 
-#endif  // CPL_SEGMENT_TREE_H_
+#endif  // CPL_STRUCTURES_SEGMENT_TREE_H_
