@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 template <int md, typename T = int>
-struct Modnum {
+struct ModNum {
     T val;
 
     T normalize(int64_t x) {
@@ -14,45 +14,45 @@ struct Modnum {
         return x;
     }
 
-    Modnum(T val_ = 0) : val(normalize(val_)) {}
+    ModNum(T val_ = 0) : val(normalize(val_)) {}
 
-    Modnum& operator+=(Modnum o) {
+    ModNum& operator+=(ModNum o) {
         if ((val += o.val) >= md) val -= md;
         return *this;
     }
 
-    Modnum& operator-=(const Modnum& o) {
+    ModNum& operator-=(const ModNum& o) {
         if ((val -= o.val) < 0) val += md;
         return *this;
     }
 
-    Modnum& operator*=(const Modnum& o) {
+    ModNum& operator*=(const ModNum& o) {
         val *= o.val;
         val %= md;
         return *this;
     }
 
-    Modnum& operator<<(int by) {
+    ModNum& operator<<(int by) {
         val <<= by;
         return *this;
     }
 
-    Modnum& operator>>(int by) {
+    ModNum& operator>>(int by) {
         val >>= by;
         return *this;
     }
 
-    Modnum operator+(const Modnum& o) const { return Modnum(val) += o; }
-    Modnum operator-(const Modnum& o) const { return Modnum(val) -= o; }
-    Modnum operator*(const Modnum& o) const { return Modnum(val) *= o; }
+    ModNum operator+(const ModNum& o) const { return ModNum(val) += o; }
+    ModNum operator-(const ModNum& o) const { return ModNum(val) -= o; }
+    ModNum operator*(const ModNum& o) const { return ModNum(val) *= o; }
 
-    bool operator==(const Modnum& o) const { return val == o.val; }
+    bool operator==(const ModNum& o) const { return val == o.val; }
 
-    friend std::istream& operator>>(std::istream& is, const Modnum& obj) {
+    friend std::istream& operator>>(std::istream& is, const ModNum& obj) {
         return is >> obj.val;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Modnum& obj) {
+    friend std::ostream& operator<<(std::ostream& os, const ModNum& obj) {
         return os << obj.val;
     }
 };
