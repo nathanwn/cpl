@@ -1,5 +1,5 @@
-#ifndef CPL_Z_FUNCTION_H_
-#define CPL_Z_FUNCTION_H_
+#ifndef CPL_STRINGS_Z_FUNCTION
+#define CPL_STRINGS_Z_FUNCTION
 
 #include <string>
 #include <vector>
@@ -24,4 +24,4 @@ struct ZFunction : std::vector<int> {
     }
 };
 
-#endif  // CPL_Z_FUNCTION_H_
+#endif  // CPL_STRINGS_Z_FUNCTION

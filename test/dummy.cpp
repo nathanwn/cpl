@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "modnum.hpp"
+#include "dummy.hpp"
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
