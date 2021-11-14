@@ -1,11 +1,10 @@
 #ifndef CPL_NUM_MODNUM_H
 #define CPL_NUM_MODNUM_H
 
+#include <iostream>
 #include <stdint.h>
 
-#include <iostream>
-
-template <int md, typename T=int>
+template <int md, typename T = int>
 struct Modnum {
     T val;
 
@@ -17,7 +16,7 @@ struct Modnum {
 
     Modnum(T val_ = 0) : val(normalize(val_)) {}
 
-    Modnum& operator+(Modnum o) {
+    Modnum& operator+=(Modnum o) {
         if ((val += o.val) >= md) val -= md;
         return *this;
     }
@@ -47,12 +46,14 @@ struct Modnum {
     Modnum operator-(const Modnum& o) const { return Modnum(val) -= o; }
     Modnum operator*(const Modnum& o) const { return Modnum(val) *= o; }
 
+    bool operator==(const Modnum& o) const { return val == o.val; }
+
     friend std::istream& operator>>(std::istream& is, const Modnum& obj) {
-        return is >> obj.v;
+        return is >> obj.val;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Modnum& obj) {
-        return os << obj.v;
+        return os << obj.val;
     }
 };
 
