@@ -68,6 +68,8 @@ ForEachMacros:
   - BOOST_FOREACH
 IncludeBlocks:   Regroup
 IncludeCategories:
+  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
+    Priority:        3
   - Regex:           '^<ext/.*\.h>'
     Priority:        2
     SortPriority:    0
@@ -157,7 +159,7 @@ SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpaceBeforeSquareBrackets: false
-Standard:        Auto
+Standard:        C++11
 StatementMacros:
   - Q_UNUSED
   - QT_REQUIRE_VERSION
