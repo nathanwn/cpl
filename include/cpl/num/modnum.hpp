@@ -4,9 +4,10 @@
 #include <iostream>
 #include <stdint.h>
 
-template <int md, typename T = int>
-struct ModNum {
-    T val;
+template <int md, typename T,
+          typename = typename std::enable_if<std::is_integral<T>::value>::type>
+class ModNum {
+    T val_;
 
     T normalize(int64_t x) {
         if (x < -md || x >= md) x %= md;
@@ -14,46 +15,89 @@ struct ModNum {
         return x;
     }
 
-    ModNum(T val_ = 0) : val(normalize(val_)) {}
+public:
+    ModNum(T val = 0) : val_(normalize(val)) {}
 
-    ModNum& operator+=(ModNum o) {
-        if ((val += o.val) >= md) val -= md;
+    T operator()() const { return val_; }
+
+    ModNum& operator+=(const ModNum& o) {
+        if ((val_ += o()) >= md) val_ -= md;
         return *this;
     }
 
     ModNum& operator-=(const ModNum& o) {
-        if ((val -= o.val) < 0) val += md;
+        if ((val_ -= o()) < 0) val_ += md;
         return *this;
     }
 
     ModNum& operator*=(const ModNum& o) {
-        val *= o.val;
-        val %= md;
+        val_ =
+            normalize(static_cast<int64_t>(val_) * static_cast<int64_t>(o()));
         return *this;
     }
 
-    ModNum& operator<<(int by) {
-        val <<= by;
+    ModNum& operator<<=(int by) {
+        if ((val_ <<= by) >= md) val_ -= md;
         return *this;
     }
 
-    ModNum& operator>>(int by) {
-        val >>= by;
+    ModNum& operator>>=(int by) {
+        val_ >>= by;
         return *this;
     }
 
-    ModNum operator+(const ModNum& o) const { return ModNum(val) += o; }
-    ModNum operator-(const ModNum& o) const { return ModNum(val) -= o; }
-    ModNum operator*(const ModNum& o) const { return ModNum(val) *= o; }
+    ModNum operator+(const ModNum& o) const { return ModNum(val_) += o; }
+    ModNum operator-(const ModNum& o) const { return ModNum(val_) -= o; }
+    ModNum operator*(const ModNum& o) const { return ModNum(val_) *= o; }
 
-    bool operator==(const ModNum& o) const { return val == o.val; }
+    bool operator==(const ModNum& o) const { return val_ == o(); }
 
-    friend std::istream& operator>>(std::istream& is, const ModNum& obj) {
-        return is >> obj.val;
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum& operator+=(V val) {
+        return *this += ModNum(val);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const ModNum& obj) {
-        return os << obj.val;
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum& operator-=(V val) {
+        return *this -= ModNum(val);
+    }
+
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum& operator*=(V val) {
+        return *this *= ModNum(val);
+    }
+
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum operator+(V val) const {
+        return ModNum(val_) += ModNum(val);
+    }
+
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum operator-(V val) const {
+        return ModNum(val_) -= ModNum(val);
+    }
+
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    ModNum operator*(V val) const {
+        return ModNum(val_) *= ModNum(val);
+    }
+
+    template <typename V, typename = typename std::enable_if<
+                              std::is_integral<V>::value>::type>
+    bool operator==(V val) const { return val_ == val; }
+
+    friend std::istream& operator>>(std::istream& is, const ModNum& o) {
+        return is >> o();
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const ModNum& o) {
+        return os << o();
     }
 };
 

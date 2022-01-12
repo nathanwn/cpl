@@ -3,4 +3,4 @@
 #include "num/modnum.hpp"
 #include <gtest/gtest.h>
 
-TEST(PowerTest, Test1) { ASSERT_EQ(power(ModNum<5>(2), 3).val, 3); }
+TEST(PowerTest, Test1) { ASSERT_EQ(power(ModNum<5, int>(2), 3)(), 3); }
