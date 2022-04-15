@@ -2,6 +2,7 @@
 #define CPL_STRUCTURES_TENSOR_H_
 
 #include <array>
+#include <cassert>
 #include <vector>
 
 template <typename T, int D>
