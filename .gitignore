@@ -17,6 +17,7 @@ _deps
 # clangd
 ./compile_commands.json
 .clangd
+.cache
 
 # C++
 # Prerequisites
