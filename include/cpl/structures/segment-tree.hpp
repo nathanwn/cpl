@@ -44,55 +44,55 @@ class SegmentTree {
             apply(t[left(node)].lazy, t[node].lazy);
             apply(t[right(node)].val, t[node].lazy);
             apply(t[right(node)].lazy, t[node].lazy);
-            t[node].lazy = empty;
+            t[node].lazy = 0;
             t[node].is_lazy = false;
             t[left(node)].is_lazy = t[right(node)].is_lazy = true;
         }
     }
 
-    T query(int from, int to, int node, int node_from, int node_to) {
-        if (from <= node_from && node_to <= to) {
+    T query(int low, int high, int node, int node_low, int node_high) {
+        if (low <= node_low && node_high <= high) {
             return t[node].val;
         }
-        if (to < node_from || node_to < from) {
+        if (high < node_low || node_high < low) {
             return 0;
         }
         pushDown(node);
-        int mid = (node_from + node_to) / 2;
-        return query(from, to, left(node), node_from, mid) +
-               query(from, to, right(node), mid + 1, node_to);
+        int mid = (node_low + node_high) / 2;
+        return query(low, high, left(node), node_low, mid) +
+               query(low, high, right(node), mid + 1, node_high);
     }
 
-    void update(int from, int to, T d, int node, int node_from, int node_to) {
-        if (from <= node_from && node_to <= to) {
+    void update(int low, int high, T d, int node, int node_low, int node_high) {
+        if (low <= node_low && node_high <= high) {
             apply(t[node].val, d);
             apply(t[node].lazy, d);
             t[node].is_lazy = true;
             return;
         }
-        if (to < node_from || node_to < from) {
+        if (high < node_low || node_high < low) {
             return;
         }
         pushDown(node);
-        int mid = (node_from + node_to) / 2;
-        update(from, to, d, left(node), node_from, mid);
-        update(from, to, d, right(node), mid + 1, node_to);
+        int mid = (node_low + node_high) / 2;
+        update(low, high, d, left(node), node_low, mid);
+        update(low, high, d, right(node), mid + 1, node_high);
         t[node].val = merge(t[left(node)].val, t[right(node)].val);
     }
 
 public:
     SegmentTree(std::vector<T>& a, Merge merge_, Apply apply_)
-        : n(a.size()), merge(merge_), apply(apply_) {
+        : merge(merge_), apply(apply_) {
         n = 1;
         while (n < (int)a.size()) n <<= 1;
         t.resize(n << 1, Node(empty));
         build(a);
     }
 
-    T query(int from, int to) { return query(from, to, 1, 0, n - 1); }
+    T query(int low, int high) { return query(low, high, 1, 0, n - 1); }
 
-    void update(int from, int to, T d) {
-        return update(from, to, d, 1, 0, n - 1);
+    void update(int low, int high, T d) {
+        return update(low, high, d, 1, 0, n - 1);
     }
 };
 

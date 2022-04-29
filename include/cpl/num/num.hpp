@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+namespace cpl {
+
 template <typename T>
 T power(T a, int64_t x) {
     T res = 1;
@@ -13,5 +15,12 @@ T power(T a, int64_t x) {
     }
     return res;
 }
+
+template <typename T>
+int signum(T val) {
+    return (val > T(0)) - (val < T(0));
+}
+
+}  // namespace cpl
 
 #endif  // CPL_NUM_NUM

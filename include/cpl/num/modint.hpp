@@ -6,7 +6,7 @@
 
 template <int md, typename T,
           typename = typename std::enable_if<std::is_integral<T>::value>::type>
-class ModNum {
+class ModInt {
     T val_;
 
     T normalize(int64_t x) {
@@ -16,87 +16,109 @@ class ModNum {
     }
 
 public:
-    ModNum(T val = 0) : val_(normalize(val)) {}
+    ModInt(T val = 0) : val_(normalize(val)) {}
 
     T operator()() const { return val_; }
 
-    ModNum& operator+=(const ModNum& o) {
+    ModInt& operator+=(const ModInt& o) {
         if ((val_ += o()) >= md) val_ -= md;
         return *this;
     }
 
-    ModNum& operator-=(const ModNum& o) {
+    ModInt& operator-=(const ModInt& o) {
         if ((val_ -= o()) < 0) val_ += md;
         return *this;
     }
 
-    ModNum& operator*=(const ModNum& o) {
+    ModInt& operator*=(const ModInt& o) {
         val_ =
             normalize(static_cast<int64_t>(val_) * static_cast<int64_t>(o()));
         return *this;
     }
 
-    ModNum& operator<<=(int by) {
+    ModInt& operator<<=(int by) {
         if ((val_ <<= by) >= md) val_ -= md;
         return *this;
     }
 
-    ModNum& operator>>=(int by) {
+    ModInt& operator>>=(int by) {
         val_ >>= by;
         return *this;
     }
 
-    ModNum operator+(const ModNum& o) const { return ModNum(val_) += o; }
-    ModNum operator-(const ModNum& o) const { return ModNum(val_) -= o; }
-    ModNum operator*(const ModNum& o) const { return ModNum(val_) *= o; }
+    // pre-increment operator
+    ModInt& operator++() { return *this += 1; }
 
-    bool operator==(const ModNum& o) const { return val_ == o(); }
+    // post-increment operator
+    ModInt operator++(int) {
+        ModInt tmp = *this;
+        ++*this;
+        return tmp;
+    }
+
+    // pre-decrement operator
+    ModInt& operator--() { return *this -= 1; }
+
+    // post-increment operator
+    ModInt operator--(int) {
+        ModInt tmp = *this;
+        --*this;
+        return tmp;
+    }
+
+    ModInt operator+(const ModInt& o) const { return ModInt(val_) += o; }
+    ModInt operator-(const ModInt& o) const { return ModInt(val_) -= o; }
+    ModInt operator*(const ModInt& o) const { return ModInt(val_) *= o; }
+
+    bool operator==(const ModInt& o) const { return val_ == o(); }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum& operator+=(V val) {
-        return *this += ModNum(val);
+    ModInt& operator+=(V val) {
+        return *this += ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum& operator-=(V val) {
-        return *this -= ModNum(val);
+    ModInt& operator-=(V val) {
+        return *this -= ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum& operator*=(V val) {
-        return *this *= ModNum(val);
+    ModInt& operator*=(V val) {
+        return *this *= ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum operator+(V val) const {
-        return ModNum(val_) += ModNum(val);
+    ModInt operator+(V val) const {
+        return ModInt(val_) += ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum operator-(V val) const {
-        return ModNum(val_) -= ModNum(val);
+    ModInt operator-(V val) const {
+        return ModInt(val_) -= ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    ModNum operator*(V val) const {
-        return ModNum(val_) *= ModNum(val);
+    ModInt operator*(V val) const {
+        return ModInt(val_) *= ModInt(val);
     }
 
     template <typename V, typename = typename std::enable_if<
                               std::is_integral<V>::value>::type>
-    bool operator==(V val) const { return val_ == val; }
+    bool operator==(V val) const {
+        return val_ == val;
+    }
 
-    friend std::istream& operator>>(std::istream& is, const ModNum& o) {
+    friend std::istream& operator>>(std::istream& is, const ModInt& o) {
         return is >> o();
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const ModNum& o) {
+    friend std::ostream& operator<<(std::ostream& os, const ModInt& o) {
         return os << o();
     }
 };

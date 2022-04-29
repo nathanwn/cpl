@@ -1,3 +1,4 @@
+#include "num/modint.hpp"
 #include <gtest/gtest.h>
 
 int main(int argc, char **argv) {

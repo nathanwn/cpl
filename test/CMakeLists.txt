@@ -1,11 +1,9 @@
-set(BINARY ${CMAKE_PROJECT_NAME}_test)
+set(TEST_TARGET ${CMAKE_PROJECT_NAME}_test)
 
 file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false *.hpp *.cpp)
 
-set(SOURCES ${TEST_SOURCES})
+add_executable(${TEST_TARGET} ${TEST_SOURCES})
 
-add_executable(${BINARY} ${TEST_SOURCES})
+add_test(NAME ${TEST_TARGET} COMMAND ${TEST_TARGET})
 
-add_test(NAME ${BINARY} COMMAND ${BINARY})
-
-target_link_libraries(${BINARY} PUBLIC ${CMAKE_PROJECT_NAME} gtest)
+target_link_libraries(${TEST_TARGET} PUBLIC ${CMAKE_PROJECT_NAME} gtest)
