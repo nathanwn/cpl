@@ -12,3 +12,5 @@ TEST(SigNumTest, PositiveTest1) { ASSERT_EQ(cpl::signum(1), 1); }
 TEST(SigNumTest, PositiveTest2) { ASSERT_EQ(cpl::signum(101), 1); }
 
 TEST(SigNumTest, ZeroTest) { ASSERT_EQ(cpl::signum(0), 0); }
+
+TEST(EtfTest, Test1) { ASSERT_EQ(cpl::etf(123456), 41088); }
