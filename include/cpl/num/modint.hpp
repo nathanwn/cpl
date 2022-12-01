@@ -9,14 +9,14 @@ template <int md, typename T,
 class ModInt {
     T val_;
 
-    T normalize(int64_t x) {
+    T Normalize(int64_t x) {
         if (x < -md || x >= md) x %= md;
         if (x < 0) x += md;
         return x;
     }
 
 public:
-    ModInt(T val = 0) : val_(normalize(val)) {}
+    ModInt(T val = 0) : val_(Normalize(val)) {}
 
     T operator()() const { return val_; }
 
@@ -32,7 +32,7 @@ public:
 
     ModInt& operator*=(const ModInt& o) {
         val_ =
-            normalize(static_cast<int64_t>(val_) * static_cast<int64_t>(o()));
+            Normalize(static_cast<int64_t>(val_) * static_cast<int64_t>(o()));
         return *this;
     }
 

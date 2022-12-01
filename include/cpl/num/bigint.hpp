@@ -13,17 +13,17 @@ class BigInt : public std::vector<int> {
 public:
     BigInt() : sign_(0) {}
     BigInt(int64_t v) { *this = v; }
-    BigInt(const std::string& s) { _parse(s); }
+    BigInt(const std::string& s) { Parse(s); }
 
-    int signum() const { return sign_; }
-    void setSign(int sign) { sign_ = sign; }
-    void flipSign() { sign_ = -sign_; }
-    void trim() {
+    int Signum() const { return sign_; }
+    void SetSign(int sign) { sign_ = sign; }
+    void FlipSign() { sign_ = -sign_; }
+    void Trim() {
         while (!empty() && !back()) pop_back();
         if (empty()) sign_ = 1;
     }
 
-    bool isZero() const { return empty() || (size() == 1 && (*this)[0] == 0); }
+    bool IsZero() const { return empty() || (size() == 1 && (*this)[0] == 0); }
 
     BigInt& operator=(int64_t v) {
         sign_ = 1;
@@ -40,39 +40,39 @@ public:
     }
 
     BigInt& operator+=(const BigInt& that) {
-        if (signum() == that.signum()) {
-            _absAdd(that);
+        if (Signum() == that.Signum()) {
+            AbsAdd(that);
         } else {
             if (_absCmp(*this, that) >= 0) {
-                _absSub(that);
+                AbsSub(that);
             } else {
                 BigInt that2 = that;
                 std::swap(*this, that2);
-                _absSub(that2);
+                AbsSub(that2);
             }
         }
         return *this;
     }
 
     BigInt& operator-=(const BigInt& that) {
-        if (signum() == that.signum()) {
+        if (Signum() == that.Signum()) {
             if (_absCmp(*this, that) >= 0) {
-                _absSub(that);
+                AbsSub(that);
             } else {
                 BigInt that2 = that;
                 std::swap(*this, that2);
-                _absSub(that2);
-                flipSign();
+                AbsSub(that2);
+                FlipSign();
             }
         } else {
-            _absAdd(that);
+            AbsAdd(that);
         }
         return *this;
     }
 
     BigInt& operator*=(const BigInt& that) {
         BigInt res;
-        res.setSign(signum() * that.signum());
+        res.SetSign(Signum() * that.Signum());
         res.resize(size() + that.size());
         for (size_t i = 0; i < size(); ++i) {
             if (!(*this)[i]) continue;
@@ -85,16 +85,16 @@ public:
                 res[i + j] = cur % BASE;
             }
         }
-        res.trim();
+        res.Trim();
         *this = res;
         return *this;
     }
 
     bool operator<(const BigInt& that) const {
-        if (signum() != that.signum()) {
-            return signum() < that.signum();
+        if (Signum() != that.Signum()) {
+            return Signum() < that.Signum();
         }
-        int sign = signum();
+        int sign = Signum();
         if (size() != that.size()) {
             return sign * size() < sign * that.size();
         }
@@ -150,13 +150,13 @@ public:
 private:
     int sign_;
 
-    void _parse(const std::string& s) {
+    void Parse(const std::string& s) {
         sign_ = 1;
         clear();
         size_t msd_pos = 0;
 
         while (msd_pos < s.size() && (s[msd_pos] == '-' || s[msd_pos] == '+')) {
-            if (s[msd_pos] == '-') flipSign();
+            if (s[msd_pos] == '-') FlipSign();
             ++msd_pos;
         }
 
@@ -170,10 +170,10 @@ private:
             push_back(d);
         }
 
-        trim();
+        Trim();
     }
 
-    void _absAdd(const BigInt& that) {
+    void AbsAdd(const BigInt& that) {
         int len = std::max(size(), that.size());
         resize(len, 0);
 
@@ -186,17 +186,17 @@ private:
         }
     }
 
-    void _absSub(const BigInt& that) {
+    void AbsSub(const BigInt& that) {
         int carry = 0;
         for (size_t i = 0; i < that.size() || carry; ++i) {
             (*this)[i] -= carry + (i < that.size()) * that[i];
             carry = (*this)[i] < 0;
             if (carry) (*this)[i] += BASE;
         }
-        trim();
+        Trim();
     }
 
-    friend int _absCmp(const BigInt& lhs, const BigInt& rhs) {
+    friend int AbsCmp(const BigInt& lhs, const BigInt& rhs) {
         if (lhs.size() != rhs.size()) {
             return lhs.size() < rhs.size() ? -1 : 1;
         }
