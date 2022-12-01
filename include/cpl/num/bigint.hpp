@@ -43,7 +43,7 @@ public:
         if (Signum() == that.Signum()) {
             AbsAdd(that);
         } else {
-            if (_absCmp(*this, that) >= 0) {
+            if (AbsCmp(*this, that) >= 0) {
                 AbsSub(that);
             } else {
                 BigInt that2 = that;
@@ -56,7 +56,7 @@ public:
 
     BigInt& operator-=(const BigInt& that) {
         if (Signum() == that.Signum()) {
-            if (_absCmp(*this, that) >= 0) {
+            if (AbsCmp(*this, that) >= 0) {
                 AbsSub(that);
             } else {
                 BigInt that2 = that;
@@ -98,7 +98,7 @@ public:
         if (size() != that.size()) {
             return sign * size() < sign * that.size();
         }
-        return sign * (_absCmp(*this, that)) == -1;
+        return sign * (AbsCmp(*this, that)) == -1;
     }
 
     // pre-increment operator

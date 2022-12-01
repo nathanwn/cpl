@@ -25,8 +25,9 @@ int Signum(T val) {
  * Euler's Totient Function
  * Time complexity: O(sqrt(n))
  **/
-inline int EulerPhi(int n) {
-    int phi = n;
+template <typename T>
+T EulerPhi(T n) {
+    T phi = n;
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {  // i is a prime factor of n
             while (n % i == 0) n /= i;
