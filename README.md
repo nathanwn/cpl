@@ -1,6 +1,6 @@
 # CPL
 
-![build](https://github.com/nathan-wien/cpl/actions/workflows/cmake.yml/badge.svg)
+![build](https://github.com/nathan-wien/cpl/actions/workflows/test.yml/badge.svg)
 
 CPL stands for **C**ompetitive **P**rogramming **L**ibrary.
 
@@ -9,21 +9,26 @@ The main purpose of this project is to properly maintain various implementations
 I created this project in order to practice C++. These days I no longer do competitive programming seriously.
 
 
-## TODO
+## Checklist
 
 - [ ] Number theory
-  - [ ] `ModNum` - Integer type that automatically handles all modulo operations
-    - [x] basic operations: `+, -, *`
   - [ ] `BigNum`
+  - [ ] `BinaryExponentiation`
   - [ ] `BinomialCoefficient`
-- [ ] Data structures
+  - [ ] `ModNum`: integer type supporting modulus arithmetics
+    - [x] Basic operations: `+, -, *`
+    - [ ] Multiplicative Inverse
+- [ ] Data Structures
   - [ ] `SegmentTree`
-  - [ ] `UnionFind`
-- [ ] Strings
+  - [ ] `Sparse Table`
+  - [ ] `Tensor`: multi-dimensional vectors
   - [ ] `Trie`
+  - [ ] `UnionFind`
+- [ ] String Algorithms
   - [ ] `KMP`
   - [ ] `PRHash`
   - [ ] `SuffixArray`
+  - [ ] `ZFunction`
 - [ ] Math
   - [ ] `Matrix`
 - [ ] Graph
@@ -33,5 +38,6 @@ I created this project in order to practice C++. These days I no longer do compe
 - [ ] Matching
   - [ ] `HopcroftKarp`
 - [ ] Geometry
-  - [ ] `Point2D`
-  - [ ] `Polygon`
+  - [ ] Basic operations: dot-product, cross-product
+  - [ ] Orientations
+  - [ ] Convex hull
