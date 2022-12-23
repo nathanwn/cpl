@@ -7,7 +7,7 @@ TEST(ZFunctionTest, Test1) {
     ZFunction z(s);
     std::vector<int> correct = {7, 0, 0, 0, 0, 0, 1};
     ASSERT_EQ(z, correct) << "Incorrect size";
-    for (int i = 0; i < (int) z.size(); i++) {
+    for (int i = 0; i < (int)z.size(); i++) {
         ASSERT_EQ(z[i], correct[i]) << "Incorrect at position " << i;
     }
 }
