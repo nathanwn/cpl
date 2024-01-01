@@ -1,4 +1,4 @@
-#include "strings/z-function.hpp"
+#include "string/z-function.hpp"
 
 #include <gtest/gtest.h>
 

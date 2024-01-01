@@ -1,4 +1,4 @@
-#include "structures/tensor.hpp"
+#include "structure/tensor.hpp"
 
 #include <gtest/gtest.h>
 #include <random>

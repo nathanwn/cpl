@@ -1,3 +1,4 @@
+rm compile_commands.json
 cmake -S . -B build
 cmake --build build
 cd build && ctest
