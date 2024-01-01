@@ -9,7 +9,7 @@ std::vector<int> coordinate_compress(const std::vector<T>& a) {
     std::vector<int> b(a.begin(), a.end());
 
     std::sort(b.begin(), b.end());
-    b.resize(unique(b.begin(), b.end()) - b.begin());
+    b.resize(std::unique(b.begin(), b.end()) - b.begin());
     std::vector<int> c(a.size());
 
     for (int i = 0; i < (int) c.size(); i++) {

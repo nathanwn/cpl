@@ -6,9 +6,8 @@
 
 namespace cpl {
 
-template <typename T,
-          typename = typename std::enable_if<std::is_integral<T>::value>::type>
-T Power(T a, int64_t x) {
+template <typename T>
+T power(T a, int64_t x) {
     T res = 1;
     while (x > 0) {
         if (x & 1) res *= a;
@@ -18,9 +17,8 @@ T Power(T a, int64_t x) {
     return res;
 }
 
-template <typename T, typename = typename std::enable_if<
-                          std::is_arithmetic<T>::value, T>::type>
-int Signum(T val) {
+template <typename T>
+int sgn(T val) {
     return (val > T(0)) - (val < T(0));
 }
 
@@ -28,9 +26,8 @@ int Signum(T val) {
  * Euler's Totient Function
  * Time complexity: O(sqrt(n))
  **/
-template <typename T,
-          typename = typename std::enable_if<std::is_integral<T>::value>::type>
-T EulerPhi(T n) {
+template <typename T>
+T euler_phi(T n) {
     T phi = n;
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {  // i is a prime factor of n
